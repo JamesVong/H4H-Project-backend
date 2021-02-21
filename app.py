@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, render_template
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, request, jsonify
+from werkzeug.security import check_password_hash
 import json
 from user import User
 
@@ -26,8 +26,6 @@ def edit_careers(username, career_name, remove):
                 careers_list.append(career_name)
 
                 user.careers = json.dumps(careers_list)
-                print("add_career")
-                print(user.careers)
                 user.db_update_career()
                 return jsonify({'message': 'Success'})
             else:
@@ -39,8 +37,6 @@ def edit_careers(username, career_name, remove):
                 careers_list.remove(career_name)
 
                 user.careers = json.dumps(careers_list)
-                print("remove_career")
-                print(user.careers)
                 user.db_update_career()
                 return jsonify({'message': 'Success'})
             else:
@@ -117,7 +113,7 @@ Look for:
     "password": "Ex"
 }
 """
-# Code repetition
+# The code repeats, but it's kind of more clear to do it this way versus signup
 @app.route('/login/', methods=['POST'])
 def login():
     # Interpret the format
@@ -135,9 +131,7 @@ def login():
         return check_username_and_pass(username, password)
     elif request.get_data():
         try:
-            print(request.get_data())
             data = json.loads(request.get_data())
-            print(data)
             username = data['username']
             password = data['password']
 
@@ -160,7 +154,7 @@ GET (return json list)
 {
     "result": ["Financial Analyist", "Consultant"]
 }
-"""  # code repetition
+"""  # The code repeats, but it's kind of more clear to do it this way
 @app.route('/career/', methods=['GET', 'POST'])
 def career():
     # Interpret the format
